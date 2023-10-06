@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 
 if (require('electron-squirrel-startup')) app.quit();
@@ -37,6 +37,20 @@ app.on('activate', function () {
     if (mainWindow === null) {
         createWindow();
     }
+});
+
+ipcMain.handle('show-save-dialog', async (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  const options = {
+    title: 'Save File',
+    defaultPath: app.getPath('downloads') + '/filtered_data.xlsx',
+    filters: [
+      { name: 'Excel', extensions: ['xlsx'] }
+    ]
+  };
+
+  const { filePath } = await dialog.showSaveDialog(window, options);
+  return filePath;  // This will be undefined if the user cancels the dialog
 });
 
 // For development purposes

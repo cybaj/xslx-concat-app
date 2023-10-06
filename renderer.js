@@ -1,3 +1,4 @@
+const { ipcRenderer } = require("electron");
 const xlsx = require("xlsx");
 
 const inputExcel = document.getElementById("input-excel");
@@ -80,10 +81,20 @@ saveToExcelButton.addEventListener("click", () => {
     `total rows: ${collectedData.length}\n filtered out: ${uniqueData.length}`
   );
 
-  const newWorkbook = xlsx.utils.book_new();
-  const newWorksheet = xlsx.utils.json_to_sheet(uniqueData);
-  xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, "Sheet1");
-  xlsx.writeFile(newWorkbook, "filtered_data.xlsx");
+  // Ask user for file location and name
+  ipcRenderer.invoke('show-save-dialog').then((filePath) => {
+    if (filePath) {
+      const newWorkbook = xlsx.utils.book_new();
+      const newWorksheet = xlsx.utils.json_to_sheet(uniqueData);
+      xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, "Sheet1");
+      xlsx.writeFile(newWorkbook, filePath);
+    } else {
+      console.log('No file path selected or provided.');
+    }
+  }).catch((err) => {
+    console.error('Error saving the file:', err);
+  });
+
 });
 
 function filterUniqueRows(data, columns) {
