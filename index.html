@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Excel Reader</title>
+  </head>
+  <body>
+    <input type="file" id="input-excel" multiple />
+    <label for="column-names">Columns for Filtering (comma-separated):</label>
+    <input type="text" id="column-names" placeholder="e.g. Column1, Column2" />
+    <button id="process-files">Process Files</button>
+
+    <table id="preview-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+    <button id="save-to-excel">Save to Excel</button>
+    <button id="refresh">Refresh</button>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
