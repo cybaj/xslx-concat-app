@@ -17,6 +17,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "make:osx": "electron-forge make --arch=universal --platform=darwin",
+    "make:osx:arm64": "electron-forge make --arch=arm64 --platform=darwin",
     "make:win32": "electron-forge make --arch=x64 --platform=win32"
   },
   "devDependencies": {
