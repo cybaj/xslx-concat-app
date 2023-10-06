@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "author": "cybaj",
+  "description": "Filter rows from excel file",
   "license": "MIT",
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
@@ -16,7 +17,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "make:osx": "electron-forge make --arch=universal --platform=darwin",
-    "make:win32": "electron-forge make --arch=universal --platform=win32"
+    "make:win32": "electron-forge make --arch=x64 --platform=win32"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.4.2",
