@@ -21,7 +21,7 @@ function createWindow() {
         mainWindow = null;
     });
 
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
 }
 
@@ -42,7 +42,7 @@ app.on('activate', function () {
 ipcMain.handle('show-save-dialog', async (event) => {
   const window = BrowserWindow.fromWebContents(event.sender);
   const options = {
-    title: 'Save File',
+    title: '합쳐진 데이터 저장',
     defaultPath: app.getPath('downloads') + '/filtered_data.xlsx',
     filters: [
       { name: 'Excel', extensions: ['xlsx'] }
@@ -52,6 +52,35 @@ ipcMain.handle('show-save-dialog', async (event) => {
   const { filePath } = await dialog.showSaveDialog(window, options);
   return filePath;  // This will be undefined if the user cancels the dialog
 });
+
+ipcMain.handle('show-save-unique-dialog', async (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  const options = {
+    title: '하나뿐 이었던 데이터 저장',
+    defaultPath: app.getPath('downloads') + '/unique_data.xlsx',
+    filters: [
+      { name: 'Excel', extensions: ['xlsx'] }
+    ]
+  };
+
+  const { filePath } = await dialog.showSaveDialog(window, options);
+  return filePath;  // This will be undefined if the user cancels the dialog
+});
+
+ipcMain.handle('show-save-duplicated-dialog', async (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  const options = {
+    title: '중복된 데이터 저장',
+    defaultPath: app.getPath('downloads') + '/duplicated_data.xlsx',
+    filters: [
+      { name: 'Excel', extensions: ['xlsx'] }
+    ]
+  };
+
+  const { filePath } = await dialog.showSaveDialog(window, options);
+  return filePath;  // This will be undefined if the user cancels the dialog
+});
+
 
 // For development purposes
 require('electron-reload')(__dirname);
